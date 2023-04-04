@@ -10,7 +10,7 @@ pub struct Username {
 
 pub async fn username(State(syllables): State<Syllables>) -> Json<Username> {
     let mut usernames = Vec::new();
-    for _ in 0..10 {
+    for _ in 0..12 {
         usernames.push(syllables.generate_username(7));
     }
     Json(Username { values: usernames })
@@ -29,7 +29,7 @@ pub struct Names {
 
 pub async fn names(State(syllables): State<Syllables>) -> Json<Names> {
     let mut names = Vec::new();
-    for _ in 0..10 {
+    for _ in 0..12 {
         names.push(Fullname {
             first_name: syllables.generate_name(3, 7),
             last_name: syllables.generate_name(3, 7),
