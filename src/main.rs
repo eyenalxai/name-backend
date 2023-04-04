@@ -7,6 +7,7 @@ use std::net::SocketAddr;
 use crate::handlers::{names, username};
 use crate::parse::get_syllables_from_json;
 use axum::{routing::get, Router};
+use tower_http::cors::CorsLayer;
 
 #[tokio::main]
 async fn main() {
@@ -22,6 +23,7 @@ async fn main() {
     let app = Router::new()
         .route("/usernames", get(username))
         .route("/names", get(names))
+        .layer(CorsLayer::permissive())
         .with_state(syllables);
 
     let addr = SocketAddr::from(([0, 0, 0, 0], port));
