@@ -14,12 +14,17 @@ async fn main() {
 
     let syllables = get_syllables_from_json(include_str!("../syllables.json"));
 
+    let port = std::env::var("PORT")
+        .expect("PORT must be set")
+        .parse::<u16>()
+        .expect("PORT must be a valid port number");
+
     let app = Router::new()
         .route("/usernames", get(username))
         .route("/names", get(names))
         .with_state(syllables);
 
-    let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
+    let addr = SocketAddr::from(([0, 0, 0, 0], port));
     tracing::debug!("listening on {}", addr);
     axum::Server::bind(&addr)
         .serve(app.into_make_service())
