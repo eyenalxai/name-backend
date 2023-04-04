@@ -5,7 +5,7 @@ use serde::Serialize;
 
 #[derive(Serialize)]
 pub struct Username {
-    pub usernames: Vec<String>,
+    pub values: Vec<String>,
 }
 
 pub async fn username(State(syllables): State<Syllables>) -> Json<Username> {
@@ -13,7 +13,7 @@ pub async fn username(State(syllables): State<Syllables>) -> Json<Username> {
     for _ in 0..10 {
         usernames.push(syllables.generate_username(7));
     }
-    Json(Username { usernames })
+    Json(Username { values: usernames })
 }
 
 #[derive(Serialize)]
@@ -24,7 +24,7 @@ pub struct Fullname {
 
 #[derive(Serialize)]
 pub struct Names {
-    pub names: Vec<Fullname>,
+    pub values: Vec<Fullname>,
 }
 
 pub async fn names(State(syllables): State<Syllables>) -> Json<Names> {
@@ -35,5 +35,5 @@ pub async fn names(State(syllables): State<Syllables>) -> Json<Names> {
             last_name: syllables.generate_name(3, 7),
         });
     }
-    Json(Names { names })
+    Json(Names { values: names })
 }
