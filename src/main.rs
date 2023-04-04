@@ -4,7 +4,7 @@ mod syllables;
 
 use std::net::SocketAddr;
 
-use crate::handlers::{names, username};
+use crate::handlers::{fullnames, username};
 use crate::parse::get_syllables_from_json;
 use axum::{routing::get, Router};
 use tower_http::cors::CorsLayer;
@@ -22,7 +22,7 @@ async fn main() {
 
     let app = Router::new()
         .route("/usernames", get(username))
-        .route("/names", get(names))
+        .route("/fullnames", get(fullnames))
         .layer(CorsLayer::permissive())
         .with_state(syllables);
 

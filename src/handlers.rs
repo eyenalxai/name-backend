@@ -27,7 +27,7 @@ pub struct Names {
     pub values: Vec<Fullname>,
 }
 
-pub async fn names(State(syllables): State<Syllables>) -> Json<Names> {
+pub async fn fullnames(State(syllables): State<Syllables>) -> Json<Names> {
     let mut names = Vec::new();
     for _ in 0..10 {
         names.push(Fullname {
