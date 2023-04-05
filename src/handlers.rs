@@ -5,15 +5,22 @@ use serde::Serialize;
 
 #[derive(Serialize)]
 pub struct Username {
-    pub values: Vec<String>,
+    pub value: String,
 }
 
-pub async fn username(State(syllables): State<Syllables>) -> Json<Username> {
+#[derive(Serialize)]
+pub struct Usernames {
+    pub values: Vec<Username>,
+}
+
+pub async fn username(State(syllables): State<Syllables>) -> Json<Usernames> {
     let mut usernames = Vec::new();
     for _ in 0..10 {
-        usernames.push(syllables.generate_username(7));
+        usernames.push(Username {
+            value: syllables.generate_username(7),
+        });
     }
-    Json(Username { values: usernames })
+    Json(Usernames { values: usernames })
 }
 
 #[derive(Serialize)]
@@ -23,11 +30,11 @@ pub struct Fullname {
 }
 
 #[derive(Serialize)]
-pub struct Names {
+pub struct Fullnames {
     pub values: Vec<Fullname>,
 }
 
-pub async fn fullnames(State(syllables): State<Syllables>) -> Json<Names> {
+pub async fn fullnames(State(syllables): State<Syllables>) -> Json<Fullnames> {
     let mut names = Vec::new();
     for _ in 0..10 {
         names.push(Fullname {
@@ -35,5 +42,5 @@ pub async fn fullnames(State(syllables): State<Syllables>) -> Json<Names> {
             last_name: syllables.generate_name(3, 7),
         });
     }
-    Json(Names { values: names })
+    Json(Fullnames { values: names })
 }
